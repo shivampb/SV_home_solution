@@ -15,12 +15,14 @@ import Login from './pages/admin/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import { ProjectProvider } from './context/ProjectContext';
 import { AuthProvider } from './context/AuthContext';
+import ScrollToTop from './components/ScrollToTop';
 
 const App: React.FC = () => {
   return (
     <AuthProvider>
       <ProjectProvider>
         <Router>
+          <ScrollToTop />
           <div className="flex flex-col min-h-screen">
             <Navbar />
             <main className="flex-grow">
