@@ -1,7 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
+
+interface FooterLink {
+  label: string;
+  url: string;
+  icon?: string;
+}
+
+interface FooterSettings {
+  description: string;
+  email: string;
+  instagramUrl: string;
+  copyrightText: string;
+  extraLinks: FooterLink[];
+}
+
+const defaultFooterSettings: FooterSettings = {
+  description: 'Creating environments that inspire and endure. We specialize in high-end residential and commercial interior architecture across the globe.',
+  email: 'hello@svhomesolution.com',
+  instagramUrl: 'https://www.instagram.com/s.v._home_solution_?igsh=bnExZjdjdDFuZzRu',
+  copyrightText: '© 2024 SV Home Solution. All rights reserved.',
+  extraLinks: []
+};
 
 const Footer: React.FC = () => {
+  const [settings, setSettings] = useState<FooterSettings>(defaultFooterSettings);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('site_settings')
+          .select('value')
+          .eq('key', 'footer')
+          .single();
+
+        if (data && data.value) {
+          const parsed = typeof data.value === 'string' ? JSON.parse(data.value) : data.value;
+          setSettings({ ...defaultFooterSettings, ...parsed });
+        }
+      } catch (error) {
+        console.warn('Failed to fetch footer settings:', error);
+      }
+    };
+
+    fetchSettings();
+  }, []);
+
   return (
     <footer className="bg-background-dark border-t border-slate-800 py-16">
       <div className="max-w-7xl mx-auto px-6">
@@ -11,7 +57,7 @@ const Footer: React.FC = () => {
               SV Home Solution<span className="text-primary">.</span>
             </Link>
             <p className="text-slate-400 font-light max-w-sm leading-relaxed">
-              Creating environments that inspire and endure. We specialize in high-end residential and commercial interior architecture across the globe.
+              {settings.description}
             </p>
           </div>
 
@@ -20,20 +66,29 @@ const Footer: React.FC = () => {
             <ul className="space-y-4 text-sm text-slate-400 font-light">
               <li className="flex items-center gap-2">
                 <span className="material-icons text-sm">email</span>
-                hello@svhomesolution.com
+                {settings.email}
               </li>
               <li className="flex items-center gap-2">
-                <a href="https://www.instagram.com/s.v._home_solution_?igsh=bnExZjdjdDFuZzRu" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-white transition-colors">
+                <a href={settings.instagramUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-white transition-colors">
                   <span className="material-icons text-sm">photo_camera</span>
                   Instagram
                 </a>
               </li>
+              {/* Extra Links */}
+              {settings.extraLinks.map((link, idx) => (
+                <li key={idx} className="flex items-center gap-2">
+                  <a href={link.url} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-white transition-colors">
+                    {link.icon && <span className="material-icons text-sm">{link.icon}</span>}
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
         <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 font-light">
-          <p>&copy; 2024 SV Home Solution. All rights reserved.</p>
+          <p>{settings.copyrightText}</p>
           <div className="mt-4 md:mt-0 opacity-50 hover:opacity-100 transition-opacity">
             <Link to="/admin" className="hover:text-white">Admin</Link>
           </div>

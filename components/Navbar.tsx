@@ -30,11 +30,10 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed w-full z-50 top-0 transition-all duration-300 ${
-        showBackground
+      className={`fixed w-full z-50 top-0 transition-all duration-300 ${showBackground
           ? 'bg-background-dark/90 backdrop-blur-md border-b border-slate-800'
           : 'bg-transparent border-transparent'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
         <Link to="/" className="text-xl font-light tracking-widest uppercase text-white group">
@@ -42,6 +41,12 @@ const Navbar: React.FC = () => {
         </Link>
 
         <div className="hidden md:flex items-center space-x-10">
+          <Link
+            to="/about"
+            className="text-xs uppercase tracking-[0.2em] text-slate-300 hover:text-white transition-colors cursor-pointer"
+          >
+            About
+          </Link>
           <a
             href="#projects"
             onClick={handleProjectsClick}

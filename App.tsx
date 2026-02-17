@@ -3,6 +3,7 @@ import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import About from './pages/About';
 import ProjectLayout from './pages/project/ProjectLayout';
 import ProjectConcept from './pages/project/ProjectConcept';
 import ProjectMaterials from './pages/project/ProjectMaterials';
@@ -25,6 +26,7 @@ const App: React.FC = () => {
             <main className="flex-grow">
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/project/:id" element={<ProjectLayout />} />
 
                 {/* Admin Routes */}
