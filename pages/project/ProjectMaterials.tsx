@@ -22,7 +22,7 @@ const ProjectMaterials: React.FC<ProjectMaterialsProps> = ({ project }) => {
                 <div className="h-px flex-1 bg-slate-800 ml-6"></div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {project.materials.map((mat, idx) => (
                     <div key={idx} className="group bg-surface-dark p-6 rounded-sm border border-slate-800 hover:border-primary/50 transition-all duration-300">
                         <div className="h-64 w-full rounded-sm mb-6 overflow-hidden relative">

@@ -22,35 +22,23 @@ const ProjectGalleryPage: React.FC<ProjectGalleryPageProps> = ({ project }) => {
                 <p className="text-slate-500 font-light text-sm">Explore the intricate details.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-[300px] md:auto-rows-[400px]">
-                {project.images.map((img, idx) => {
-                    // Determine span based on index for a dynamic grid layout
-                    // 0: Big (2x2)
-                    // 3, 6, 9... : Wide (2x1)
-                    const isLarge = idx === 0;
-                    const isWide = idx > 0 && idx % 3 === 0;
-
-                    return (
-                        <div
-                            key={idx}
-                            className={`
-                            relative group rounded-sm overflow-hidden 
-                            ${isLarge ? 'md:col-span-2 md:row-span-2' : ''}
-                            ${isWide ? 'md:col-span-2' : ''}
-                        `}
-                        >
-                            <img
-                                src={img}
-                                alt={`Gallery ${idx + 1}`}
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
-                            <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm px-4 py-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
-                                View {idx + 1}
-                            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {project.images.map((img, idx) => (
+                    <div
+                        key={idx}
+                        className="relative group rounded-sm overflow-hidden h-[400px]"
+                    >
+                        <img
+                            src={img}
+                            alt={`Gallery ${idx + 1}`}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                        <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm px-4 py-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
+                            View {idx + 1}
                         </div>
-                    );
-                })}
+                    </div>
+                ))}
             </div>
         </div>
     );
