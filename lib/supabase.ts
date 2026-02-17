@@ -1,14 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Configuration based on provided credentials.
-// Project ID: vsxbvragqfsgvsmsssxc
-// Key: sb_publishable_blSTWxeiIIwCfJXH8bRQvw_K8obhYTF
-
-const supabaseUrl = process.env.SUPABASE_URL || 'https://vsxbvragqfsgvsmsssxc.supabase.co';
-const supabaseKey = process.env.SUPABASE_KEY || 'sb_publishable_blSTWxeiIIwCfJXH8bRQvw_K8obhYTF';
+// Configuration: Ensure API keys are loaded from environment variables (Vite)
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-  console.warn('Supabase credentials missing. Please check lib/supabase.ts or your .env file.');
+  throw new Error('Supabase credentials missing. Please define VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env or .env.local file.');
 }
 
 export const supabase = createClient(supabaseUrl, supabaseKey);

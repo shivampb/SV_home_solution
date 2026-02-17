@@ -9,6 +9,7 @@ import ProjectMaterials from './pages/project/ProjectMaterials';
 import ProjectGalleryPage from './pages/project/ProjectGalleryPage';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminProjectEditor from './pages/admin/AdminProjectEditor';
+import AdminSiteSettings from './pages/admin/AdminSiteSettings';
 import Login from './pages/admin/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import { ProjectProvider } from './context/ProjectContext';
@@ -33,6 +34,7 @@ const App: React.FC = () => {
                   <Route path="/admin" element={<AdminDashboard />} />
                   <Route path="/admin/new" element={<AdminProjectEditor />} />
                   <Route path="/admin/edit/:id" element={<AdminProjectEditor />} />
+                  <Route path="/admin/settings" element={<AdminSiteSettings />} />
                 </Route>
 
               </Routes>

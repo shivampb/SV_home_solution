@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../../lib/supabase';
+import imageCompression from 'browser-image-compression';
 
 interface ImageUploaderProps {
     onUpload: (url: string) => void;
@@ -20,13 +21,31 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUpload, currentImage, l
             }
 
             const file = event.target.files[0];
-            const fileExt = file.name.split('.').pop();
+
+            // Compression options
+            const options = {
+                maxSizeMB: 1,
+                maxWidthOrHeight: 1920,
+                useWebWorker: true
+            };
+
+            let uploadFile = file;
+            try {
+                console.log('Compressing image...');
+                const compressedFile = await imageCompression(file, options);
+                uploadFile = compressedFile;
+                console.log(`Compressed: ${(file.size / 1024 / 1024).toFixed(2)}MB -> ${(uploadFile.size / 1024 / 1024).toFixed(2)}MB`);
+            } catch (error) {
+                console.warn("Image compression failed, falling back to original file:", error);
+            }
+
+            const fileExt = uploadFile.name.split('.').pop() || file.name.split('.').pop();
             const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
             const filePath = `${fileName}`;
 
             const { error: uploadError } = await supabase.storage
                 .from('projects')
-                .upload(filePath, file);
+                .upload(filePath, uploadFile);
 
             if (uploadError) {
                 throw uploadError;

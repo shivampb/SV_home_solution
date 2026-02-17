@@ -24,11 +24,11 @@ const AdminDashboard: React.FC = () => {
   };
 
   if (projectsLoading) {
-      return (
-          <div className="min-h-screen bg-background-dark flex items-center justify-center">
-              <span className="text-slate-500 animate-pulse">Loading projects...</span>
-          </div>
-      );
+    return (
+      <div className="min-h-screen bg-background-dark flex items-center justify-center">
+        <span className="text-slate-500 animate-pulse">Loading projects...</span>
+      </div>
+    );
   }
 
   return (
@@ -40,19 +40,26 @@ const AdminDashboard: React.FC = () => {
             <p className="text-slate-400">Manage your portfolio content.</p>
           </div>
           <div className="flex gap-4">
-             <button
-                onClick={handleSignOut}
-                className="px-6 py-3 border border-slate-700 text-slate-400 hover:text-white hover:border-white transition-colors text-sm uppercase tracking-widest font-bold"
-             >
-                Sign Out
-             </button>
-             <Link 
-                to="/admin/new" 
-                className="px-6 py-3 bg-primary hover:bg-primary-dark text-white rounded transition-colors text-sm uppercase tracking-widest font-bold flex items-center gap-2"
-              >
-                <span className="material-icons text-sm">add</span>
-                New Project
-              </Link>
+            <button
+              onClick={handleSignOut}
+              className="px-6 py-3 border border-slate-700 text-slate-400 hover:text-white hover:border-white transition-colors text-sm uppercase tracking-widest font-bold"
+            >
+              Sign Out
+            </button>
+            <Link
+              to="/admin/new"
+              className="px-6 py-3 bg-primary hover:bg-primary-dark text-white rounded transition-colors text-sm uppercase tracking-widest font-bold flex items-center gap-2"
+            >
+              <span className="material-icons text-sm">add</span>
+              New Project
+            </Link>
+            <Link
+              to="/admin/settings"
+              className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded transition-colors text-sm uppercase tracking-widest font-bold flex items-center gap-2 border border-slate-700 hover:border-white"
+            >
+              <span className="material-icons text-sm">settings</span>
+              Settings
+            </Link>
           </div>
         </div>
 
@@ -83,22 +90,22 @@ const AdminDashboard: React.FC = () => {
                     <td className="p-6 text-slate-300">{project.location}</td>
                     <td className="p-6">
                       <div className="flex items-center justify-end gap-3">
-                        <Link 
-                          to={`/project/${project.id}`} 
+                        <Link
+                          to={`/project/${project.id}`}
                           target="_blank"
                           className="p-2 text-slate-500 hover:text-white transition-colors"
                           title="View Live"
                         >
                           <span className="material-icons text-lg">visibility</span>
                         </Link>
-                        <Link 
-                          to={`/admin/edit/${project.id}`} 
+                        <Link
+                          to={`/admin/edit/${project.id}`}
                           className="p-2 text-slate-500 hover:text-primary transition-colors"
                           title="Edit"
                         >
                           <span className="material-icons text-lg">edit</span>
                         </Link>
-                        <button 
+                        <button
                           onClick={() => handleDelete(project.id)}
                           className="p-2 text-slate-500 hover:text-red-500 transition-colors"
                           title="Delete"
@@ -110,11 +117,11 @@ const AdminDashboard: React.FC = () => {
                   </tr>
                 ))}
                 {projects.length === 0 && (
-                   <tr>
-                     <td colSpan={4} className="p-12 text-center text-slate-500">
-                       No projects found. Create your first one!
-                     </td>
-                   </tr>
+                  <tr>
+                    <td colSpan={4} className="p-12 text-center text-slate-500">
+                      No projects found. Create your first one!
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>
